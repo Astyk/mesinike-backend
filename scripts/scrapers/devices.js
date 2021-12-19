@@ -111,7 +111,7 @@ const scrape = async(allDevices, scraper) => {
 
                             if (allDevices.includes(device.id)) {
                                 // Already exist
-                                console.log("Device exist " + device.id);
+                                //console.log("Device exist " + device.id);
                                 return;
                             } 
         
@@ -135,6 +135,9 @@ const scrape = async(allDevices, scraper) => {
                                 const location = await getLocation(location_id);
                                 if (location) {
                                     device.location = location.id;
+                                } else {
+                                    console.log('Device sync - Location not imported yet');
+                                    return;
                                 }
 
                                 await createDevice(
@@ -178,7 +181,7 @@ const main = async() => {
             return
         }
         
-        const canRun = true; //await scraperCanRun(scraper);
+        const canRun = await scraperCanRun(scraper);
         if (canRun) {
             //get localy stored
             const allDevices = await getAllDevices(scraper)
