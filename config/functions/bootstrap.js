@@ -10,8 +10,6 @@ const moment = require('moment');
  *
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap
  */
- const log_scraper = require('../../scripts/scrapers/logs.js')
 
 module.exports = () => {
-    // log_scraper.main();
 }; 

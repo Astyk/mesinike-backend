@@ -166,29 +166,33 @@ const scrape = async(allLocation, scraper) => {
 }
 
 const main = async() => {
-    const slug = "xlog-locations"
-    const scraper = await strapi.query('scraper').findOne({
-        slug: slug
-    });
+    try {
+        const slug = "xlog-locations"
+        const scraper = await strapi.query('scraper').findOne({
+            slug: slug
+        });
 
-    console.log(scraper);
+        console.log(scraper);
 
-    if (scraper == null || !scraper.enabled || !scraper.frequency)
-    {
-        console.log("Scraper not found, is not activated ");
-        return
-    }
-    
-    const canRun = await scraperCanRun(scraper);
-    if (canRun) {
-        //get localy stored
-        const allLocation = await getAllLocation(scraper)
+        if (scraper == null || !scraper.enabled || !scraper.frequency)
+        {
+            console.log("Scraper not found, is not activated ");
+            return
+        }
         
-        await scrape(allLocation, scraper);
+        const canRun = await scraperCanRun(scraper);
+        if (canRun) {
+            //get localy stored
+            const allLocation = await getAllLocation(scraper)
+            
+            await scrape(allLocation, scraper);
 
-        report = await getReport(newLocations)
+            report = await getReport(newLocations)
 
-        await updateScraper(scraper, report, errors);
+            await updateScraper(scraper, report, errors);
+        }
+    } catch (error) {
+        console.log(error);
     }
 
 }

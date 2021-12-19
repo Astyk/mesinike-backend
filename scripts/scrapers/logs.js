@@ -294,33 +294,38 @@ const scrape = async(allLocations, scraper) => {
 }
 
 const main = async() => {
-    const slug = "xlog-logs"
-    const scraper = await strapi.query('scraper').findOne({
-        slug: slug
-    });
+    try {
+        const slug = "xlog-logs"
+        const scraper = await strapi.query('scraper').findOne({
+            slug: slug
+        });
 
-    console.log('Start scraper ' + scraper.slug);
+        console.log('Start scraper ' + scraper.slug);
 
-    if (scraper == null || !scraper.enabled || !scraper.frequency)
-    {
-        console.log("Scraper not found, is not activated ");
-        return
+        if (scraper == null || !scraper.enabled || !scraper.frequency)
+        {
+            console.log("Scraper not found, is not activated ");
+            return
+        }
+        
+        const canRun = await scraperCanRun(scraper);
+        if (!canRun) {        
+            console.info(scraper.slug + ' not ready to run');
+            return
+        }
+
+        //get Locations localy stored
+        const allLocations = await getAllLocations();
+
+        await scrape(allLocations, scraper);
+
+        report = await getReport(newLogs)
+
+        await updateScraper(scraper, report, errors);
+    } catch (error) {
+        console.log(error);
     }
     
-    const canRun = await scraperCanRun(scraper);
-    if (!canRun) {        
-        console.info(scraper.slug + ' not ready to run');
-        return
-    }
-
-    //get Locations localy stored
-    const allLocations = await getAllLocations();
-
-    await scrape(allLocations, scraper);
-
-    report = await getReport(newLogs)
-
-    await updateScraper(scraper, report, errors);
 
 }
 

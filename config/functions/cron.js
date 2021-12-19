@@ -8,8 +8,8 @@
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks
  */
 
-// const locations = require('../../scripts/scrapers/locations.js')
-// const devices = require('../../scripts/scrapers/devices.js')
+const locations = require('../../scripts/scrapers/locations.js')
+const devices = require('../../scripts/scrapers/devices.js')
 const log_scraper = require('../../scripts/scrapers/logs.js')
 
 module.exports = {
@@ -21,6 +21,8 @@ module.exports = {
   //
   // }
   '* * * * *': () => {
+    locations.main();
+    devices.main();
     log_scraper.main();
   }
 };

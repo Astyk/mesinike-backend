@@ -166,29 +166,33 @@ const scrape = async(allDevices, scraper) => {
 }
 
 const main = async() => {
-    const slug = "xlog-devices"
-    const scraper = await strapi.query('scraper').findOne({
-        slug: slug
-    });
+    try {
+        const slug = "xlog-devices"
+        const scraper = await strapi.query('scraper').findOne({
+            slug: slug
+        });
 
-    if (scraper == null || !scraper.enabled || !scraper.frequency)
-    {
-        console.log("Scraper not found, is not activated ");
-        return
-    }
-    
-    const canRun = true; //await scraperCanRun(scraper);
-    if (canRun) {
-        //get localy stored
-        const allDevices = await getAllDevices(scraper)
+        if (scraper == null || !scraper.enabled || !scraper.frequency)
+        {
+            console.log("Scraper not found, is not activated ");
+            return
+        }
         
-        await scrape(allDevices, scraper);
+        const canRun = true; //await scraperCanRun(scraper);
+        if (canRun) {
+            //get localy stored
+            const allDevices = await getAllDevices(scraper)
+            
+            await scrape(allDevices, scraper);
 
-        report = await getReport(newDevices)
+            report = await getReport(newDevices)
 
-        await updateScraper(scraper, report, errors);
-    } else {
-        console.log('scraper ' + scraper.slug + ' cant run');
+            await updateScraper(scraper, report, errors);
+        } else {
+            console.log('scraper ' + scraper.slug + ' cant run');
+        }
+    } catch (error) {
+        console.log(error);
     }
 
 }
