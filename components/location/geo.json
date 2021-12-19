@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_location_geos",
+  "info": {
+    "name": "geo",
+    "icon": "map-marker-alt"
+  },
+  "options": {},
+  "attributes": {
+    "lat": {
+      "type": "decimal"
+    },
+    "lon": {
+      "type": "decimal"
+    }
+  }
+}

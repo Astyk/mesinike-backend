@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locations",
+  "info": {
+    "name": "Location",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name"
+    },
+    "remote_id": {
+      "type": "string",
+      "private": false,
+      "unique": true,
+      "required": true
+    },
+    "origin": {
+      "type": "json",
+      "private": true
+    },
+    "note": {
+      "type": "text"
+    },
+    "device": {
+      "via": "location",
+      "model": "device"
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "location.address"
+    },
+    "geo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "location.geo"
+    },
+    "last_report": {
+      "type": "datetime"
+    },
+    "logs": {
+      "via": "location",
+      "collection": "log",
+      "autoPopulate": false
+    }
+  }
+}

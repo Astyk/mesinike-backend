@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "devices",
+  "info": {
+    "name": "Device",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "sim": {
+      "type": "string",
+      "private": true
+    },
+    "scale": {
+      "type": "boolean"
+    },
+    "nest_temperature": {
+      "type": "boolean"
+    },
+    "rain": {
+      "type": "boolean"
+    },
+    "wind": {
+      "type": "boolean"
+    },
+    "serial": {
+      "type": "string",
+      "private": false
+    },
+    "imei": {
+      "type": "string",
+      "private": true
+    },
+    "remote_id": {
+      "type": "string",
+      "unique": false
+    },
+    "last_report": {
+      "type": "datetime"
+    },
+    "control": {
+      "type": "string",
+      "private": true
+    },
+    "note": {
+      "type": "text"
+    },
+    "location": {
+      "via": "device",
+      "model": "location"
+    },
+    "url": {
+      "type": "string",
+      "private": true
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "logs",
+  "info": {
+    "name": "Log",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "report": {
+      "type": "datetime"
+    },
+    "delta": {
+      "type": "decimal"
+    },
+    "comulative": {
+      "type": "decimal"
+    },
+    "weight": {
+      "type": "decimal"
+    },
+    "external_temp": {
+      "type": "decimal"
+    },
+    "humidity": {
+      "type": "integer"
+    },
+    "nest_temp": {
+      "type": "decimal"
+    },
+    "rain": {
+      "type": "integer"
+    },
+    "wind": {
+      "type": "decimal"
+    },
+    "correction": {
+      "type": "decimal"
+    },
+    "comment": {
+      "type": "text"
+    },
+    "reference": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "location": {
+      "model": "location",
+      "via": "logs"
+    }
+  }
+}
