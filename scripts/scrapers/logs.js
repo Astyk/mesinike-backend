@@ -99,6 +99,16 @@ const scrape = async(allLocations, scraper) => {
                         console.log('Location log already done' + loc.last_report + ' moment utc ' + moment.utc(loc.last_report).format("DD.MM.YYYY."));
                         return;
                     }
+
+                    if(parseInt(process.env.PLAN_HEROKU) > 0)
+                    {
+                        const logsCount = await strapi.query('logs').count({location: loc.id});
+                        if (logsCount > parseInt(process.env.PLAN_HEROKU))
+                        {
+                            console.log("HEROKU PLAN Location logs limit reached "+ loc.slug + " count: " + logsCount);
+                            return;
+                        }
+                    }
                     
                     const reportLoaded = []; // last report date container
 
